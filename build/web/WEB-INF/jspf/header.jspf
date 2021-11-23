@@ -1,0 +1,29 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<%
+    Boolean isLogin = session.getAttribute("username") != null;
+
+    if (request.getParameter("username") != null) {
+        session.setAttribute("username", request.getParameter("username"));
+        response.sendRedirect(request.getRequestURI());
+    }
+    if (request.getParameter("logout") != null) {
+        session.removeAttribute("username");
+        response.sendRedirect(request.getRequestURI());
+    }
+%>
+<header>
+    <h1>ErikSantanaTasksApp</h1>
+    <%if (isLogin) {%>
+    <h2>Olá, <%= session.getAttribute("username") %></h2>
+    <form>
+        <input type="submit" value="fazer logout" name="logout" />
+    </form>
+    <%} else {%>
+    <p>É preciso se identificar para criar uma tarefa.</p>
+    <form>
+        <input type="text" name="username" placeholder="Digite seu nome de usuário" />
+        <input type="submit" value="fazer login" />
+    </form>
+    <%}%>
+</header>
